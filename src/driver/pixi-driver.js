@@ -2,7 +2,7 @@ import PIXI from 'pixi.js'
 // import {Observable} from 'rx'
 // import _ from 'lodash'
 
-function makePixiDriver (el, width, height) {
+export function makePixiDriver (el, width, height) {
   var renderer = PIXI.autoDetectRenderer(width, height)
   var stage = new PIXI.Container()
   // Store of Pixi graphics, by id
@@ -56,5 +56,3 @@ function updateRectangle (rectangle, graphic) {
   rectangle.drawRect(graphic.x, graphic.y, graphic.width, graphic.height)
   rectangle.endFill()
 }
-
-export default makePixiDriver

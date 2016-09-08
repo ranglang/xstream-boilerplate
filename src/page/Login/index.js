@@ -35,10 +35,22 @@ function Login (sources) {
         h1('.login', 'Login page')
       ])),
     Canvas: xs.of(
-      rect({draw: [{fill: 'skyblue'}]}, [
-        renderGameOverSplash()
-      ])
-    )
+        rect({draw: [{fill: 'skyblue'}]}, [
+          renderGameOverSplash()
+        ])
+      )
+    // pixi: xs.of({
+    //   graphics: [
+    //     {
+    //       id: 'ball',
+    //       type: 'circle',
+    //       x: 100 + 1 * 2,
+    //       y: 100 + 1 * 2,
+    //       radius: 25,
+    //       fill: 0xFF0000,
+    //       alpha: 1
+    //     }]
+    // })
   }
 }
 
