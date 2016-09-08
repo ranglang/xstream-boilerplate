@@ -21,6 +21,7 @@ export default function main (sources) {
 
   return {
     DOM: page.DOM,
+    // Animation: makeAnimationDriver(),
     Canvas: page.Canvas,
     router: page.route$// return page's something
   }
