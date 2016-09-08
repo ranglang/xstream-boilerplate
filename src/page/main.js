@@ -21,7 +21,7 @@ export default function main (sources) {
 
   return {
     DOM: page.DOM,
-    router: page.route$,
-    Canvas: page.Canvas
+    Canvas: page.Canvas,
+    router: page.route$// return page's something
   }
 }

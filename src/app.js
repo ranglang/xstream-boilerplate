@@ -17,8 +17,8 @@ const history = supportsHistory()
 const drivers =
   {
     DOM: makeDOMDriver('#app', {transposition: false}),
-    router: makeRouterDriver(...history),
-    Canvas: makeCanvasDriver('#canvas', {width: 800, height: 600})
+    Canvas: makeCanvasDriver('#canvas', {width: 800, height: 600}),
+    router: makeRouterDriver(...history)
     // pixi: makePixiDriver(document.getElementById('game'), 800, 600)
   }
 
