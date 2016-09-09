@@ -2,7 +2,6 @@ import dropRepeats from 'xstream/extra/dropRepeats'
 import isolate from '@cycle/isolate'
 import {div} from '@cycle/dom'
 import {eqProps} from 'ramda'
-
 import {requireSources, mergeFlatten} from 'util/index'
 // import xs from 'xstream'
 // import {text} from '../../driver/canvas-driver'
@@ -41,7 +40,8 @@ const callComponent = sources => ({path, value}) => {
   return {
     ...component,
     DOM: component.DOM.startWith(loading),
-    Canvas: component.Canvas
+    Canvas: component.Canvas,
+    keyboard: component.keyboard
   }
 }
 
@@ -58,6 +58,7 @@ function ComponentRouter (sources) {
     pluck: key => mergeFlatten(key, [component$]),
     DOM: mergeFlatten('DOM', [component$]),
     Canvas: mergeFlatten('Canvas', [component$]),
+    keyboard: mergeFlatten('keyboard', [component$]),
     route$: mergeFlatten('route$', [component$])
   }
 }

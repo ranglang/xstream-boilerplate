@@ -17,12 +17,14 @@ const routes =
   }
 
 export default function main (sources) {
+  // sources.keyboard.ups().map(ev => ev.displayKey + ' was pressed').map(i => console.log(i))
   const page = ComponentRouter({...sources, routes$: xs.of(routes)})
 
   return {
     DOM: page.DOM,
     // Animation: makeAnimationDriver(),
     Canvas: page.Canvas,
+    keyboard: page.keyboard,
     router: page.route$// return page's something
   }
 }
