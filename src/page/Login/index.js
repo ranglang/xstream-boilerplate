@@ -111,6 +111,14 @@ function main (sources) {
         ])
       ),
     pixi: xs.of({
+      images: [
+        {
+          id: 'cat',
+          path: 'birds_in_flight_902385.jpg',
+          x: 300,
+          y: 300
+        }
+      ],
       graphics: [
         {
           id: 'ball',
@@ -121,6 +129,16 @@ function main (sources) {
           fill: 0xFFFFFF,
           alpha: 1
         }
+        // {
+        //   id: 'flight',
+        //   type: 'image',
+        //   name: 'birds_in_flight_902385.jpg',
+        //   x: 300,
+        //   y: 300,
+        //   radius: 3,
+        //   fill: 0xFFFFFF,
+        //   alpha: 1
+        // }
       ]
     })
   }
