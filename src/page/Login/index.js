@@ -2,7 +2,7 @@ import xs from 'xstream'
 import isolate from '@cycle/isolate'
 // import {ul, li} from '@cycle/dom'
 import {div, button, p} from '@cycle/dom'
-import {rect, text} from '../../driver/canvas-driver' // text
+// import {rect, text} from '../../driver/canvas-driver' // text
 // import fromEvent from 'xstream/extra/fromEvent'
 
 // import pairwise from 'xstream/extra/pairwise'
@@ -152,12 +152,12 @@ function main (sources) {
   // const vtree$ = view(state$)
 
   return {
-    DOM: vtree$,
-    Canvas: xs.of(
-        rect({draw: [{fill: 'skyblue'}]}, [
-          renderGameOverSplash()
-        ])
-      )
+    DOM: vtree$
+    // Canvas: xs.of(
+    //     rect({draw: [{fill: 'skyblue'}]}, [
+    //       renderGameOverSplash()
+    //     ])
+    //   )
     // pixi: xs.of({
     //   graphics: [
     //     {
@@ -174,30 +174,30 @@ function main (sources) {
   }
 }
 
-function renderGameOverSplash () {
-  const props = {
-    x: 400,
-    y: 300,
-    font: '72pt Arial',
-    textAlign: 'center',
-    value: 'Game Over'
-  }
-
-  const subTextProps = {
-    x: 0,
-    y: 50,
-    font: '25pt Arial',
-    textAlign: 'center',
-    fillStyle: 'red',
-    value: 'Press Space to play again'
-  }
-
-  return (
-    text(props, [
-      text({value: 'Press Space to play again', ...subTextProps})
-    ])
-  )
-}
+// function renderGameOverSplash () {
+//   const props = {
+//     x: 400,
+//     y: 300,
+//     font: '72pt Arial',
+//     textAlign: 'center',
+//     value: 'Game Over'
+//   }
+//
+//   const subTextProps = {
+//     x: 0,
+//     y: 50,
+//     font: '25pt Arial',
+//     textAlign: 'center',
+//     fillStyle: 'red',
+//     value: 'Press Space to play again'
+//   }
+//
+//   return (
+//     text(props, [
+//       text({value: 'Press Space to play again', ...subTextProps})
+//     ])
+//   )
+// }
 
 function Login (sources) {
   return main(sources)

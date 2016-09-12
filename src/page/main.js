@@ -23,7 +23,7 @@ export default function main (sources) {
   return {
     DOM: page.DOM,
     // Animation: makeAnimationDriver(),
-    Canvas: page.Canvas,
+    // Canvas: page.Canvas,
     // pixi: page.pixi,
     keyboard: page.keyboard,
     router: page.route$// return page's something

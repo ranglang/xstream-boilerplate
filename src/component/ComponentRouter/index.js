@@ -58,7 +58,7 @@ function ComponentRouter (sources) {
   return {
     pluck: key => mergeFlatten(key, [component$]),
     DOM: mergeFlatten('DOM', [component$]),
-    Canvas: mergeFlatten('Canvas', [component$]),
+    // Canvas: mergeFlatten('Canvas', [component$]),
     // pixi: mergeFlatten('pixi', [component$]),
     keyboard: mergeFlatten('keyboard', [component$]),
     route$: mergeFlatten('route$', [component$])

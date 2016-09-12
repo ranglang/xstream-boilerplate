@@ -15,25 +15,10 @@ export function makePixiDriver (el, width, height) {
   var views = {}
   stage.interactive = true
   el.appendChild(renderer.view)
-  // loader.reset()
-
-  // let loader = PIXI.loader // .load(setup)
-  // loader.add('images/birds_in_flight_902385.jpg').add('images/cat.png').load(setup)
-  //
-  // function setup () {
-  // }
 
   let driver = function pixiDriver (sink$) {
     sink$.addListener({
       next: view => {
-        // view.images.forEach(image => {
-        //   console.log(stage.children.length)
-        //   console.log('image')
-        //   let sprite = PIXI.Sprite.from('images/birds_in_flight_902385.jpg')
-        //   console.log(stage.contains(sprite))
-        //   // sprite.visible = true
-        //   stage.addChild(sprite)
-        // })
         view.graphics.forEach(graphic => {
           if (!views[graphic.id]) {
             views[graphic.id] = new PIXI.Graphics()

@@ -4,7 +4,7 @@ import Cycle from '@cycle/xstream-run'
 import {makeDOMDriver} from '@cycle/dom'
 import {makeRouterDriver, supportsHistory} from 'cyclic-router'
 import {createHistory, createHashHistory} from 'history'
-import {makeCanvasDriver} from './driver/canvas-driver'
+// import {makeCanvasDriver} from './driver/canvas-driver'
 // import { makePixiDriver } from './driver/pixi-driver'
 
 // import {makeAnimationDriver} from 'cycle-animation-driver';
@@ -40,7 +40,7 @@ const history = supportsHistory()
 const drivers =
   {
     DOM: makeDOMDriver('#app', {transposition: false}),
-    Canvas: makeCanvasDriver('#canvas', {width: 800, height: 600}),
+    // Canvas: makeCanvasDriver('#canvas', {width: 800, height: 600}),
     keyboard: makeKeyboardDriver(),
     // pixi: makePixiDriver(document.getElementById('game'), 800, 600),
     router: makeRouterDriver(...history)
