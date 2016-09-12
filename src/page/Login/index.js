@@ -109,7 +109,20 @@ function main (sources) {
         rect({draw: [{fill: 'skyblue'}]}, [
           renderGameOverSplash()
         ])
-      )
+      ),
+    pixi: xs.of({
+      graphics: [
+        {
+          id: 'ball',
+          type: 'circle',
+          x: 300,
+          y: 300,
+          radius: 3,
+          fill: 0xFFFFFF,
+          alpha: 1
+        }
+      ]
+    })
   }
 }
 

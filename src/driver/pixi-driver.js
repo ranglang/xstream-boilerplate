@@ -1,4 +1,6 @@
-import PIXI from 'pixi.js'
+import PIXI from 'pixi.js/bin/pixi.js'
+import XStreamAdapter from '@cycle/xstream-adapter'
+import xs from 'xstream'
 // import {Observable} from 'rx'
 // import _ from 'lodash'
 
@@ -10,33 +12,40 @@ export function makePixiDriver (el, width, height) {
   stage.interactive = true
   el.appendChild(renderer.view)
 
-  function pixiDriver ($view) {
-    $view.forEach(view => {
-      view.graphics.forEach(graphic => {
-        if (!views[graphic.id]) {
-          views[graphic.id] = new PIXI.Graphics()
-          stage.addChild(views[graphic.id])
-        }
-        else {
-          views[graphic.id].clear()
-        }
-        let view = views[graphic.id]
+  // function pixiDriver ($view) {
+  let driver = function pixiDriver (sink$) {
+    sink$.addListener({
+      next: view => {
+        view.graphics.forEach(graphic => {
+          if (!views[graphic.id]) {
+            views[graphic.id] = new PIXI.Graphics()
+            stage.addChild(views[graphic.id])
+          }
+          else {
+            views[graphic.id].clear()
+          }
+          let view = views[graphic.id]
 
-        let update = ({
-          circle: updateCircle,
-          rectangle: updateRectangle
-        })[graphic.type]
+          let update = ({
+            circle: updateCircle,
+            rectangle: updateRectangle
+          })[graphic.type]
 
-        if (!update) {
-          throw new Error(`Invalid graphic type ${graphic.type}`)
-        }
-        update(view, graphic)
-      })
-
-      renderer.render(stage)
+          if (!update) {
+            throw new Error(`Invalid graphic type ${graphic.type}`)
+          }
+          update(view, graphic)
+        })
+        renderer.render(stage)
+      },
+      error: e => { throw e },
+      complete: () => null
     })
+
+    return xs.empty()
   }
-  return pixiDriver
+  driver.streamAdapter = XStreamAdapter
+  return driver
 }
 
 function updateCircle (circle, graphic) {
