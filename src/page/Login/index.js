@@ -1,7 +1,7 @@
 import xs from 'xstream'
 import isolate from '@cycle/isolate'
 // import {ul, li} from '@cycle/dom'
-import {div, button} from '@cycle/dom'
+import {div, button, p} from '@cycle/dom'
 import {rect, text} from '../../driver/canvas-driver' // text
 // import fromEvent from 'xstream/extra/fromEvent'
 
@@ -10,8 +10,6 @@ import {rect, text} from '../../driver/canvas-driver' // text
 
 // function intent (keydownSource) {
 //   return keydownSource
-//     .map(ev => ev.code.replace('Key', ''))
-//     .filter(str => str.length === 1)
 // }
 
 // function model (action$) {
@@ -104,17 +102,57 @@ import {rect, text} from '../../driver/canvas-driver' // text
 //   )
 // }
 
-const view1 =
-    div(
-      [button('.decrement', 'login')]
-    )
+const loginModal =
+  div(
+    ['loginModal',
+      button('.cancle', 'Cancle')
+    ]
+  )
+
 function main (sources) {
-  // sources.
+  const openModal$ = sources.DOM.select('.login').events('click').mapTo(1)
+  const cancleModal$ = sources.DOM.select('.cancle').events('click').mapTo(0)
+
+  const houseModal$ = sources.DOM.select('.house').events('click').mapTo('house')
+  const marketModal$ = sources.DOM.select('.market').events('click').mapTo('market')
+
+  const action2$ = xs.merge(houseModal$, marketModal$).fold((acc, x) => {
+    if (acc === x) return 'null'
+    else return x
+  }, 'null')
+
+  const action1$ = xs.merge(openModal$, cancleModal$).startWith(0)
+
+  const action$ = xs.combine(action1$, action2$)
+
+  const loginStyle = {fontSize: '36px', padding: '0', listStyle: 'none', display: 'flex', justifyContent: 'flex-end', width: '100%'}
+  const btnStyle = {marginTop: '15px', marginRight: '50px'}
+
+  const count$ = action$
+  const vtree$ = count$.map(data =>
+      div([
+        div({style: loginStyle},
+          [button('.login', {style: btnStyle}, 'Login')]
+        ),
+        data[0] > 0 ? loginModal : null,
+        p('Counter: ' + data[0] + 'Location: ' + data[1]),
+        div(
+          [
+            button('.house', 'house'),
+            button('.market', 'market')
+          ]
+        )
+      ])
+    )
+
+  // const key$ = intent(sources.keyboard.ups()) // intent(sources.Keydown)
+  // sources.DOM.select('.login').events('click')
   // const key$ = intent(sources.keyboard.ups()) // intent(sources.Keydown)
   // const state$ = model(key$)
   // const vtree$ = view(state$)
+
   return {
-    DOM: xs.of(view1),
+    DOM: vtree$,
     Canvas: xs.of(
         rect({draw: [{fill: 'skyblue'}]}, [
           renderGameOverSplash()
