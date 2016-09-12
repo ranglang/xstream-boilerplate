@@ -109,66 +109,23 @@ function main (sources) {
         rect({draw: [{fill: 'skyblue'}]}, [
           renderGameOverSplash()
         ])
-      ),
-    pixi: xs.of({
-      images: [
-        {
-          id: 'cat',
-          path: 'birds_in_flight_902385.jpg',
-          x: 300,
-          y: 300
-        }
-      ],
-      graphics: [
-        {
-          id: 'ball',
-          type: 'circle',
-          x: 300,
-          y: 300,
-          radius: 3,
-          fill: 0xFFFFFF,
-          alpha: 1
-        }
-        // {
-        //   id: 'flight',
-        //   type: 'image',
-        //   name: 'birds_in_flight_902385.jpg',
-        //   x: 300,
-        //   y: 300,
-        //   radius: 3,
-        //   fill: 0xFFFFFF,
-        //   alpha: 1
-        // }
-      ]
-    })
+      )
+    // pixi: xs.of({
+    //   graphics: [
+    //     {
+    //       id: 'ball',
+    //       type: 'circle',
+    //       x: 300,
+    //       y: 300,
+    //       radius: 3,
+    //       fill: 0xFFFFFF,
+    //       alpha: 1
+    //     }
+    //   ]
+    // })
   }
 }
 
-// function intent (state) {
-//   return sources.keyboard.ups().map(ev => Object.assign( {num: 1+ev.displayKey} ))
-//
-// }
-//
-// function startState () {
-//   return {
-//     num: 1
-//   }
-// }
-//
-// const view = ({state}) => {
-//   return {
-//     DOM: xs.of(
-//       div({}, [
-//         h1('.login', state.num)
-//       ])),
-//     Canvas: xs.of(
-//         rect({draw: [{fill: 'skyblue'}]}, [
-//           renderGameOverSplash()
-//         ])
-//       )
-//   }
-// }
-//
 function renderGameOverSplash () {
   const props = {
     x: 400,

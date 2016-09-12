@@ -2,6 +2,11 @@ import PIXI from 'pixi.js/bin/pixi.js'
 import XStreamAdapter from '@cycle/xstream-adapter'
 import xs from 'xstream'
 
+PIXI.DisplayObjectContainer.prototype.contains = function (child)
+{
+  return (this.children.indexOf(child) !== -1)
+}
+
 export function makePixiDriver (el, width, height) {
   var renderer = PIXI.autoDetectRenderer(width, height)
   renderer.backgroundColor = 0x061639
@@ -10,26 +15,23 @@ export function makePixiDriver (el, width, height) {
   var views = {}
   stage.interactive = true
   el.appendChild(renderer.view)
-  // let loader = PIXI.loader // .load(setup)
   // loader.reset()
+
+  // let loader = PIXI.loader // .load(setup)
   // loader.add('images/birds_in_flight_902385.jpg').add('images/cat.png').load(setup)
   //
   // function setup () {
-  //   let cat = new PIXI.Sprite(
-  //     PIXI.loader.resources['images/birds_in_flight_902385.jpg'].texture
-  //   )
-  //   cat.name = 'cat'
-  //   cat.visible = false
-  //   stage.addChild(cat)
-  //   renderer.render(stage)
   // }
 
   let driver = function pixiDriver (sink$) {
     sink$.addListener({
       next: view => {
         // view.images.forEach(image => {
-        //   let sprite = PIXI.Sprite.from('cat')
-        //   sprite.visible = true
+        //   console.log(stage.children.length)
+        //   console.log('image')
+        //   let sprite = PIXI.Sprite.from('images/birds_in_flight_902385.jpg')
+        //   console.log(stage.contains(sprite))
+        //   // sprite.visible = true
         //   stage.addChild(sprite)
         // })
         view.graphics.forEach(graphic => {
