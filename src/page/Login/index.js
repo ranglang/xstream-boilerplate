@@ -20,7 +20,8 @@ function loginModal (value) {
     display: 'flex',
     flexDirection: 'column',
     backgroundColor: 'blue',
-    paddingTop: '70px'
+    paddingTop: '70px',
+    border: 'none'
   }
   return div(
     [
@@ -32,13 +33,14 @@ function loginModal (value) {
 function main (sources) {
   const startState = {
     value: 0,
-    x: 800,
-    y: 20,
+    x: 1920,
+    y: 0,
     width: 0,
     height: 0
   }
 
   const openModal$ = sources.DOM.select('.login').events('click').mapTo()
+  const closeModal$ = sources.DOM.select('.cancle').events('click').mapTo()
 
   let tweenY$ = tween({
     from: 0, to: 300, duration: 500, ease: tween.power3.easeIn
@@ -56,6 +58,32 @@ function main (sources) {
     from: 0, to: 300, duration: 500, ease: tween.power3.easeIn
   })
 
+  // hello
+  let tween1Y$ = tween({
+    from: 300, to: 0, duration: 500, ease: tween.power3.easeIn
+  })
+
+  let tween1X$ = tween({
+    from: 500, to: 1024, duration: 500, ease: tween.power3.easeIn
+  })
+
+  let tween1W$ = tween({
+    from: 500, to: 0, duration: 500, ease: tween.power3.easeIn
+  })
+
+  let tween1H$ = tween({
+    from: 300, to: 0, duration: 500, ease: tween.power3.easeIn
+  })
+
+  const tween1$ = xs.combine(tween1X$, tween1Y$, tween1W$, tween1H$)
+    .map(data => ({
+      value: 1,
+      x: data[0],
+      y: data[1],
+      width: data[2],
+      height: data[3]
+    }))
+
   const tween$ = xs.combine(tweenX$, tweenY$, tweenW$, tweenH$)
     .map(data => ({
       value: 1,
@@ -65,10 +93,13 @@ function main (sources) {
       height: data[3]
     }))
 
-  const open$ = openModal$.map(() => tween$).flatten().startWith(startState)
+  const open$ = openModal$.map(() => tween$).flatten() //
+  const close$ = closeModal$.map(() => tween1$).flatten()
 
   const houseModal$ = sources.DOM.select('.house').events('click').mapTo('house')
   const marketModal$ = sources.DOM.select('.market').events('click').mapTo('market')
+
+  const login$ = xs.merge(open$, close$).startWith(startState)
 
   const action2$ = xs.merge(houseModal$, marketModal$).fold((acc, x) => {
     if (acc === x) return 'null'
@@ -95,7 +126,7 @@ function main (sources) {
   //   }
   // }, startState)
 
-  const action$ = xs.combine(open$, action2$)
+  const action$ = xs.combine(login$, action2$)
 
   const loginStyle = {fontSize: '36px', padding: '0', listStyle: 'none', display: 'flex', justifyContent: 'flex-end', width: '100%'}
   const btnStyle = {marginTop: '15px', marginRight: '50px', position: 'absolute'}
