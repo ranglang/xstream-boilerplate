@@ -7,15 +7,38 @@ import {div, button, img} from '@cycle/dom'
 // import pairwise from 'xstream/extra/pairwise'
 // import {difference, sortBy} from 'lodash'// intersection
 
-const loginModal =
-  div(
-    ['loginModal',
-      button('.cancle', 'Cancle')
+function loginModal (value) {
+  console.log(value)
+  const loginModalStyle = {
+    left: `${Math.round(value.x)}px`,
+    top: `${Math.round(value.y)}px`,
+    width: `${Math.round(value.width)}px`,
+    height: `${Math.round(value.height)}px`,
+    position: 'absolute',
+    alignItems: 'center',
+    display: 'flex',
+    flexDirection: 'column',
+    backgroundColor: 'blue',
+    paddingTop: '70px'
+  }
+  return div(
+    [
+      button('.cancle', {style: loginModalStyle}, 'Cancle')
     ]
   )
+}
 
 function main (sources) {
+  const startState = {
+    value: 0,
+    x: 800,
+    y: 20,
+    width: 0,
+    height: 0
+  }
+
   const openModal$ = sources.DOM.select('.login').events('click').mapTo(1)
+
   const cancleModal$ = sources.DOM.select('.cancle').events('click').mapTo(0)
 
   const houseModal$ = sources.DOM.select('.house').events('click').mapTo('house')
@@ -26,7 +49,29 @@ function main (sources) {
     else return x
   }, 'null')
 
-  const action1$ = xs.merge(openModal$, cancleModal$).startWith(0)
+  // let leftToRight$ = tween({
+  //   from: 0, to: 250, duration: 500, ease: tween.power3.easeIn
+  // }).map(x => ({ left: x, top: 0 }));// left: x,top:0
+
+  const action1$ = xs.merge(openModal$, cancleModal$).fold((acc, x) => {
+    if (x === 1) {
+      return ({
+        value: 1,
+        x: 318,
+        y: 195,
+        width: 500,
+        height: 300
+      })
+    } else {
+      return {
+        value: 0,
+        x: 980,
+        y: 1204,
+        width: 0,
+        height: 0
+      }
+    }
+  }, startState)
 
   const action$ = xs.combine(action1$, action2$)
 
@@ -39,8 +84,8 @@ function main (sources) {
         div({style: loginStyle},
           [button('.login', {style: btnStyle}, 'Login')]
         ),
-        data[0] > 0 ? loginModal : null,
-        // p('Counter: ' + data[0] + 'Location: ' + data[1]),
+        // data[0].value > 0 ? loginModal(data[0]) : null,
+        loginModal(data[0]),
         div(
           [
             button('.house', 'house'),
@@ -52,7 +97,6 @@ function main (sources) {
         )
       ])
     )
-
   return {
     DOM: vtree$
   }
