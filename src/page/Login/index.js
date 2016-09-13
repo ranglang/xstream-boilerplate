@@ -1,5 +1,6 @@
 import xs from 'xstream'
 import isolate from '@cycle/isolate'
+import tween from 'xstream/extra/tween'
 import {div, button, img} from '@cycle/dom'
 // import {rect, text} from '../../driver/canvas-driver' // text
 // import fromEvent from 'xstream/extra/fromEvent'
@@ -37,9 +38,34 @@ function main (sources) {
     height: 0
   }
 
-  const openModal$ = sources.DOM.select('.login').events('click').mapTo(1)
+  const openModal$ = sources.DOM.select('.login').events('click').mapTo()
 
-  const cancleModal$ = sources.DOM.select('.cancle').events('click').mapTo(0)
+  let tweenY$ = tween({
+    from: 0, to: 300, duration: 500, ease: tween.power3.easeIn
+  })
+
+  let tweenX$ = tween({
+    from: 1024, to: 500, duration: 500, ease: tween.power3.easeIn
+  })
+
+  let tweenW$ = tween({
+    from: 0, to: 500, duration: 500, ease: tween.power3.easeIn
+  })
+
+  let tweenH$ = tween({
+    from: 0, to: 300, duration: 500, ease: tween.power3.easeIn
+  })
+
+  const tween$ = xs.combine(tweenX$, tweenY$, tweenW$, tweenH$)
+    .map(data => ({
+      value: 1,
+      x: data[0],
+      y: data[1],
+      width: data[2],
+      height: data[3]
+    }))
+
+  const open$ = openModal$.map(() => tween$).flatten().startWith(startState)
 
   const houseModal$ = sources.DOM.select('.house').events('click').mapTo('house')
   const marketModal$ = sources.DOM.select('.market').events('click').mapTo('market')
@@ -49,31 +75,27 @@ function main (sources) {
     else return x
   }, 'null')
 
-  // let leftToRight$ = tween({
-  //   from: 0, to: 250, duration: 500, ease: tween.power3.easeIn
-  // }).map(x => ({ left: x, top: 0 }));// left: x,top:0
+  // const action1$ = xs.merge(openModal$, cancleModal$).fold((acc, x) => {
+  //   if (x === 1) {
+  //     return ({
+  //       value: 1,
+  //       x: 318,
+  //       y: 195,
+  //       width: 500,
+  //       height: 300
+  //     })
+  //   } else {
+  //     return {
+  //       value: 0,
+  //       x: 980,
+  //       y: 1204,
+  //       width: 0,
+  //       height: 0
+  //     }
+  //   }
+  // }, startState)
 
-  const action1$ = xs.merge(openModal$, cancleModal$).fold((acc, x) => {
-    if (x === 1) {
-      return ({
-        value: 1,
-        x: 318,
-        y: 195,
-        width: 500,
-        height: 300
-      })
-    } else {
-      return {
-        value: 0,
-        x: 980,
-        y: 1204,
-        width: 0,
-        height: 0
-      }
-    }
-  }, startState)
-
-  const action$ = xs.combine(action1$, action2$)
+  const action$ = xs.combine(open$, action2$)
 
   const loginStyle = {fontSize: '36px', padding: '0', listStyle: 'none', display: 'flex', justifyContent: 'flex-end', width: '100%'}
   const btnStyle = {marginTop: '15px', marginRight: '50px', position: 'absolute'}
