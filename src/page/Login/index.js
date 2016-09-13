@@ -1,7 +1,7 @@
 import xs from 'xstream'
 import isolate from '@cycle/isolate'
 // import {ul, li} from '@cycle/dom'
-import {div, button, p} from '@cycle/dom'
+import {div, button, p, img} from '@cycle/dom'
 // import {rect, text} from '../../driver/canvas-driver' // text
 // import fromEvent from 'xstream/extra/fromEvent'
 
@@ -127,6 +127,7 @@ function main (sources) {
 
   const loginStyle = {fontSize: '36px', padding: '0', listStyle: 'none', display: 'flex', justifyContent: 'flex-end', width: '100%'}
   const btnStyle = {marginTop: '15px', marginRight: '50px'}
+  const imageStyle = {marginTop: '15px', marginRight: '50px'}
 
   const count$ = action$
   const vtree$ = count$.map(data =>
@@ -141,6 +142,9 @@ function main (sources) {
             button('.house', 'house'),
             button('.market', 'market')
           ]
+        ),
+        div('.backgounddiv',
+          [img({src: 'http://img0.imgtn.bdimg.com/it/u=3607045857,288679269&fm=21&gp=0.jpg', className: 'hello', style: imageStyle})]
         )
       ])
     )

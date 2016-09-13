@@ -25,7 +25,7 @@ export default function main (sources) {
     // Animation: makeAnimationDriver(),
     // Canvas: page.Canvas,
     // pixi: page.pixi,
-    keyboard: page.keyboard,
+    // keyboard: page.keyboard,
     router: page.route$// return page's something
   }
 }
