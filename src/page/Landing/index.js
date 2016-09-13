@@ -15,7 +15,7 @@ function Landing (sources) {
         img({props: {src: 'http://dummyimage.com/400x600/4ac/fff/'}}),
         h1('.welcome', 'Cycle.js Diversity XStream Boilerplate!'),
         div('.backgounddiv',
-          img({src: 'http://dummyimage.com/400x600/4ac/fff/'})
+          img({src: 'images/shop.png'})
         )
       ])
     ),

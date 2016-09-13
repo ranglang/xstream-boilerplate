@@ -1,7 +1,7 @@
 import xs from 'xstream'
 import isolate from '@cycle/isolate'
 // import {ul, li} from '@cycle/dom'
-import {div, button, p, img} from '@cycle/dom'
+import {div, button, img} from '@cycle/dom'
 // import {rect, text} from '../../driver/canvas-driver' // text
 // import fromEvent from 'xstream/extra/fromEvent'
 
@@ -126,8 +126,7 @@ function main (sources) {
   const action$ = xs.combine(action1$, action2$)
 
   const loginStyle = {fontSize: '36px', padding: '0', listStyle: 'none', display: 'flex', justifyContent: 'flex-end', width: '100%'}
-  const btnStyle = {marginTop: '15px', marginRight: '50px'}
-  // const imageStyle = {marginTop: '15px', marginRight: '50px'}
+  const btnStyle = {marginTop: '15px', marginRight: '50px', position: 'absolute'}
 
   const count$ = action$
   const vtree$ = count$.map(data =>
@@ -136,7 +135,7 @@ function main (sources) {
           [button('.login', {style: btnStyle}, 'Login')]
         ),
         data[0] > 0 ? loginModal : null,
-        p('Counter: ' + data[0] + 'Location: ' + data[1]),
+        // p('Counter: ' + data[0] + 'Location: ' + data[1]),
         div(
           [
             button('.house', 'house'),
@@ -144,7 +143,7 @@ function main (sources) {
           ]
         ),
         div('.backgounddiv',
-          [img({props: {src: 'http://dummyimage.com/400x600/4ac/fff/'}})]
+          [img({props: {src: 'images/shop.png'}})]
         )
       ])
     )
