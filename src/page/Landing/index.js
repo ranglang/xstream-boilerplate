@@ -2,7 +2,7 @@ import xs from 'xstream'
 import delay from 'xstream/extra/delay'
 
 import isolate from '@cycle/isolate'
-import {div, h1} from '@cycle/dom'
+import {div, h1, img} from '@cycle/dom'
 
 function Landing (sources) {
   // const imageStyle = {marginTop: '15px', marginRight: '50px'}
@@ -12,10 +12,11 @@ function Landing (sources) {
   return {
     DOM: xs.of(
       div({}, [
-        h1('.welcome', 'Cycle.js Diversity XStream Boilerplate!')
-        // div('.backgounddiv',
-        //   [img('.hello', {src: 'http://img0.imgtn.bdimg.com/it/u=3607045857,288679269&fm=21&gp=0.jpg', style: imageStyle, className: 'hello'})]
-        // )
+        img({props: {src: 'http://dummyimage.com/400x600/4ac/fff/'}}),
+        h1('.welcome', 'Cycle.js Diversity XStream Boilerplate!'),
+        div('.backgounddiv',
+          img({src: 'http://dummyimage.com/400x600/4ac/fff/'})
+        )
       ])
     ),
     route$
