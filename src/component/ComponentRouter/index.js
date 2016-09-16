@@ -39,9 +39,9 @@ const callComponent = sources => ({path, value}) => {
   const component = value({...sources, router: sources.router.path(path)})
   return {
     ...component,
-    DOM: component.DOM.startWith(loading)
+    DOM: component.DOM.startWith(loading),
     // Canvas: component.Canvas,
-    // pixi: component.pixi,
+    pixi: component.pixi
     // keyboard: component.keyboard
   }
 }
@@ -59,7 +59,7 @@ function ComponentRouter (sources) {
     pluck: key => mergeFlatten(key, [component$]),
     DOM: mergeFlatten('DOM', [component$]),
     // Canvas: mergeFlatten('Canvas', [component$]),
-    // pixi: mergeFlatten('pixi', [component$]),
+    pixi: mergeFlatten('pixi', [component$]),
     // keyboard: mergeFlatten('keyboard', [component$]),
     route$: mergeFlatten('route$', [component$])
   }

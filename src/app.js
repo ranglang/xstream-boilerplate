@@ -5,10 +5,10 @@ import {makeDOMDriver} from '@cycle/dom'
 import {makeRouterDriver, supportsHistory} from 'cyclic-router'
 import {createHistory, createHashHistory} from 'history'
 // import {makeCanvasDriver} from './driver/canvas-driver'
-// import { makePixiDriver } from './driver/pixi-driver'
+import { makePixiDriver } from './driver/pixi-driver'
 
 // import {makeAnimationDriver} from 'cycle-animation-driver';
-import { makeKeyboardDriver } from 'cycle-keyboard'
+// import { makeKeyboardDriver } from 'cycle-keyboard'
 
 // Local imports
 import main from 'page/main'
@@ -41,8 +41,8 @@ const drivers =
   {
     DOM: makeDOMDriver('#app', {transposition: false}),
     // Canvas: makeCanvasDriver('#canvas', {width: 800, height: 600}),
-    keyboard: makeKeyboardDriver(),
-    // pixi: makePixiDriver(document.getElementById('game'), 800, 600),
+    // keyboard: makeKeyboardDriver(),
+    pixi: makePixiDriver(document.getElementById('game'), 800, 600),
     router: makeRouterDriver(...history)
   }
 

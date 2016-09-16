@@ -1,4 +1,5 @@
 import xs from 'xstream'
+import PIXI from 'pixi.js/bin/pixi.js'
 import isolate from '@cycle/isolate'
 import tween from 'xstream/extra/tween'
 import {div, button, img} from '@cycle/dom'
@@ -66,17 +67,14 @@ function main (sources) {
 
   // ji
   let tweenY$ = tween({
-    from: 0, to: 300, duration: 500, ease: tween.power3.easeIn
+    from: 0, to: 300, duration: 500, ease: tween.power3.easeOut
   })
-
   let tweenX$ = tween({
-    from: 1024, to: 500, duration: 500, ease: tween.power3.easeIn
+    from: 1024, to: 500, duration: 500, ease: tween.power3.easeInOut
   })
-
   let tweenW$ = tween({
     from: 0, to: 500, duration: 500, ease: tween.power3.easeIn
   })
-
   let tweenH$ = tween({
     from: 0, to: 300, duration: 500, ease: tween.power3.easeIn
   })
@@ -85,15 +83,12 @@ function main (sources) {
   let tween1Y$ = tween({
     from: 300, to: 0, duration: 500, ease: tween.power3.easeIn
   })
-
   let tween1X$ = tween({
     from: 500, to: 1024, duration: 500, ease: tween.power3.easeIn
   })
-
   let tween1W$ = tween({
     from: 500, to: 0, duration: 500, ease: tween.power3.easeIn
   })
-
   let tween1H$ = tween({
     from: 300, to: 0, duration: 500, ease: tween.power3.easeIn
   })
@@ -156,6 +151,7 @@ function main (sources) {
   }).flatten().startWith(startState1)
 
   const action$ = xs.combine(login$, action2$)
+
   const loginStyle = {fontSize: '36px', padding: '0', listStyle: 'none', display: 'flex', justifyContent: 'flex-end', width: '100%'}
   const btnStyle = {marginTop: '15px', marginRight: '50px', position: 'absolute'}
   const count$ = action$
@@ -178,7 +174,23 @@ function main (sources) {
       ])
     )
   return {
-    DOM: vtree$
+    DOM: vtree$,
+    pixi: xs.of(
+      { graphics: [
+        {
+          id: '22222',
+          type: 'circle',
+          x: 300,
+          y: 300,
+          radius: 50,
+          fill: 0x333333,
+          alpha: 1
+        }
+      ],
+      image: new PIXI.Sprite(PIXI.Texture.fromImage('images/bg-shop.png'))
+      //  new PIXI.Sprite(PIXI.loader.resources['images/bg-shop.png'].texture)
+    }
+    )
   }
 }
 
