@@ -7,6 +7,7 @@ export function fromSprite (element, eventName) { // : Stream<Event>
     next: null,
     start: function start (listener) { // : Listener<Event>
       this.next = function next (event) {
+        console.log('next')
         listener.next(event)
       }
       this.element.on(eventName, this.next)

@@ -51,13 +51,48 @@ export function makePixiDriver (el, width, height) {
   // function setup () {
   // }
 
+  // const bunneyState = {
+  //   sprite: bunney,
+  //   x: 0,
+  //   y: 0,
+  //   width: 10,
+  //   height: 20
+  // }
   let driver = function pixiDriver (sink$) {
     sink$.addListener({
       next: view => {
-        // console.log(image)
-        // view.image.interactive = true
-        // stage.addChild(view.image)
-        stage.addChild(view.image)
+        console.log('view.image.length: ' + view.images.length)
+        view.images.forEach(data => {
+          stage.addChild(data)
+          // console.log('hi' + data)
+        })
+
+        //   console.log(data)
+          // let sprite = data.sprite
+          // sprite.position.x = data.x
+          // sprite.position.y = data.y
+          // sprite.width = data.width
+          // sprite.height = data.height
+          // stage.addChild(sprite)
+          // if (!views[graphic.id]) {
+          //   views[graphic.id] = new PIXI.Graphics()
+          //   stage.addChild(views[graphic.id])
+          // }
+          // else {
+          //   views[graphic.id].clear()
+          // }
+          // let view = views[graphic.id]
+          //
+          // let update = ({
+          //   circle: updateCircle,
+          //   rectangle: updateRectangle
+          // })[graphic.type]
+          //
+          // if (!update) {
+          //   throw new Error(`Invalid graphic type ${graphic.type}`)
+          // }
+          // update(view, graphic) // update view,and graphic
+        // })
         renderer.render(stage)
         // if (image !== 'undefined') {
           // stage.addChild(image2)

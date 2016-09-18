@@ -6,32 +6,7 @@ import {div, button} from '@cycle/dom'
 
 import { fromSprite } from '../../driver/fromSprite'
 function locationModal (data) {
-  // const locationModalStyle = {
-  //   left: `${Math.round(data.x)}px`,
-  //   top: `${Math.round(data.y)}px`,
-  //   width: `${Math.round(data.width)}px`,
-  //   height: `${Math.round(data.height)}px`,
-  //   position: 'absolute',
-  //   alignItems: 'center',
-  //   display: 'flex',
-  //   flexDirection: 'column',
-  //   backgroundColor: 'blue',
-  //   paddingTop: '70px',
-  //   border: 'none'
-  // }
   return null
-  // if (data.value === 'house') {
-  //   return div()
-  //   // return div({style: locationModalStyle},
-  //   //   [img({props: {src: 'images/bg-shop.png'}})]
-  //   // )
-  // } else if (data.value === 'market') {
-  //   return div({style: locationModalStyle},
-  //     [img({props: {src: 'images/bg-shop.png'}})]
-  //   )
-  // } else {
-  //   return null
-  // }
 }
 
 function loginModal (value) {
@@ -69,27 +44,6 @@ function main (sources) {
   let bunney = new PIXI.Sprite(PIXI.Texture.fromImage('images/bunny.png'))
   bunney.interactive = true
 
-  // bunney.on('clickup', function () {
-  //   console.log('hhhhhhhhhhh')
-  // })
-  // bunney.on('clickup', onDown)
-  bunney.on('mouseup', onDown)
-  // bunney.on('touchstart', onDown)
-  // bunney.on('touchend', onDown)
-  function onDown (eventData) {
-    console.log('...')
-    // image.scale.x += 0.3
-    // image.scale.y += 0.3
-    // renderer.render(stage)
-  }
-  const bSprite$ = fromSprite(bunney, 'mouseup').mapTo(1)
-
-  bSprite$.addListener({
-    next: i => console.log(i),
-    error: err => console.error(err),
-    complete: () => console.log('completed')
-  })
-
   let tweenY$ = tween({
     from: 0, to: 300, duration: 500, ease: tween.power3.easeOut
   })
@@ -103,7 +57,6 @@ function main (sources) {
     from: 0, to: 300, duration: 500, ease: tween.power3.easeIn
   })
 
-  // hello
   let tween1Y$ = tween({
     from: 300, to: 0, duration: 500, ease: tween.power3.easeIn
   })
@@ -172,11 +125,7 @@ function main (sources) {
         height: data[3]
       }))
     }
-  }).flatten().startWith(
-      // (.map(() => {
-      startState1
-      // })
-  )
+  }).flatten().startWith(startState1)
 
   const action$ = xs.combine(login$, action2$)
 
@@ -198,25 +147,52 @@ function main (sources) {
         locationModal(data[1])
       ])
     )
+
+  const bunneyState = {
+    sprite: bunney,
+    x: 0,
+    y: 0,
+    width: 20,
+    height: 20
+  }
+
+  const bSprite$ = fromSprite(bunney, 'mouseup').mapTo('mouseup').startWith(bunneyState)
+  // .fold((acc, data) => {
+  //   return {
+  //     sprite: acc.sprite,
+  //     x: acc.x + 3,
+  //     y: acc.y + 3,
+  //     width: 20,
+  //     height: 20
+  //   }
+  // })
+
+  bSprite$.addListener({
+    next: i => console.log('iii:' + i),
+    error: err => console.error(err),
+    complete: () => console.log('completed')
+  })
+
+  const pixitree$ = bSprite$.map(data => {
+    return { graphics: [
+      {
+        id: '22222',
+        type: 'circle',
+        x: 300,
+        y: 300,
+        radius: 50,
+        fill: 0x333333,
+        alpha: 1
+      }
+    ],
+    images: [bunney]
+    }
+  }
+  )
+
   return {
     DOM: vtree$,
-    pixi: xs.of(
-      { graphics: [
-        {
-          id: '22222',
-          type: 'circle',
-          x: 300,
-          y: 300,
-          radius: 50,
-          fill: 0x333333,
-          alpha: 1
-        }
-      ],
-      image: bunney
-        // var image = new PIXI.Sprite(PIXI.Texture.fromImage('images/bg-shop.png'))
-      //  new PIXI.Sprite(PIXI.loader.resources['images/bg-shop.png'].texture)
-    }
-    )
+    pixi: pixitree$
   }
 }
 
