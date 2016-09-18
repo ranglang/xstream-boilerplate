@@ -4,7 +4,7 @@ import isolate from '@cycle/isolate'
 import tween from 'xstream/extra/tween'
 import {div, button} from '@cycle/dom'
 
-import { fromSprite } from '../../driver/fromSprite'
+import { fromSpriteEvent } from '../../driver/fromSprite'
 function locationModal (data) {
   return null
 }
@@ -156,24 +156,34 @@ function main (sources) {
     height: 20
   }
 
-  const bSprite$ = fromSprite(bunney, 'mouseup').mapTo('mouseup').startWith(bunneyState)
-  // .fold((acc, data) => {
+  const bSprite$ = fromSpriteEvent(bunney, 'mouseup').mapTo('mouseup').fold((x, a) => {
+    return {
+      sprite: x.sprite,
+      x: x.x + 3,
+      y: x.y + 3,
+      width: x.width + 3,
+      height: x.height + 3
+    }
+  }, bunneyState)
+  // fromSprite(bunney, 'mouseup').mapTo('mouseup').fold((event, data) => {
+  //   console.log('data: ' + data)
   //   return {
-  //     sprite: acc.sprite,
-  //     x: acc.x + 3,
-  //     y: acc.y + 3,
+  //     sprite: data.sprite,
+  //     x: data.x + 3,
+  //     y: data.y + 3,
   //     width: 20,
   //     height: 20
   //   }
+  // }).startWith(bunneyState)
+
+  // bSprite$.addListener({
+  //   next: i => console.log('iii:' + i),
+  //   error: err => console.error(err),
+  //   complete: () => console.log('completed')
   // })
 
-  bSprite$.addListener({
-    next: i => console.log('iii:' + i),
-    error: err => console.error(err),
-    complete: () => console.log('completed')
-  })
-
   const pixitree$ = bSprite$.map(data => {
+    console.log('...' + data)
     return { graphics: [
       {
         id: '22222',
@@ -185,7 +195,7 @@ function main (sources) {
         alpha: 1
       }
     ],
-    images: [bunney]
+    images: [data]
     }
   }
   )

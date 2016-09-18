@@ -1,13 +1,14 @@
 import {Stream} from 'xstream'
-// import PIXI from 'pixi.js/bin/pixi.js'
 
-export function fromSprite (element, eventName) { // : Stream<Event>
+export function fromSpriteEvent (element, eventName) { // : Stream<Event>
   return Stream.create({ // <Producer<Event>>
     element: element,
     next: null,
     start: function start (listener) { // : Listener<Event>
+      element.interactive = true
       this.next = function next (event) {
-        console.log('next')
+        console.log('event: ' + event)
+
         listener.next(event)
       }
       this.element.on(eventName, this.next)

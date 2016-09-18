@@ -63,17 +63,15 @@ export function makePixiDriver (el, width, height) {
       next: view => {
         console.log('view.image.length: ' + view.images.length)
         view.images.forEach(data => {
-          stage.addChild(data)
-          // console.log('hi' + data)
+          let sprite = data.sprite
+          sprite.position.x = data.x
+          sprite.position.y = data.y
+          sprite.width = data.width
+          sprite.height = data.height
+          stage.addChild(sprite)
         })
 
         //   console.log(data)
-          // let sprite = data.sprite
-          // sprite.position.x = data.x
-          // sprite.position.y = data.y
-          // sprite.width = data.width
-          // sprite.height = data.height
-          // stage.addChild(sprite)
           // if (!views[graphic.id]) {
           //   views[graphic.id] = new PIXI.Graphics()
           //   stage.addChild(views[graphic.id])
