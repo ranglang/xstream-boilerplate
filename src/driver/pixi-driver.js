@@ -26,9 +26,9 @@ export function makePixiDriver (el, width, height) {
     image.on('touchend', onDown)
     function onDown (eventData) {
       console.log('...')
-      // image.scale.x += 0.3
-      // image.scale.y += 0.3
-      // renderer.render(stage)
+      image.scale.x += 0.3
+      image.scale.y += 0.3
+      renderer.render(stage)
     }
     stage.addChild(image)
     renderer.render(stage)
