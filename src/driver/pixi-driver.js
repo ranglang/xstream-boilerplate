@@ -25,12 +25,27 @@ export function makePixiDriver (el, width, height) {
     image.on('touchstart', onDown)
     image.on('touchend', onDown)
     function onDown (eventData) {
-      console.log('...')
       image.scale.x += 0.3
       image.scale.y += 0.3
       renderer.render(stage)
     }
     stage.addChild(image)
+
+    let image1 = new PIXI.Sprite(PIXI.Texture.from('images/bunny.png'))
+    image1.x = 100
+    image1.y = 100
+    image1.interactive = true
+    // sprite.on('mousedown', onDown)
+    image1.on('clickup', onDown1)
+    image1.on('mouseup', onDown1)
+    image1.on('touchstart', onDown1)
+    image1.on('touchend', onDown1)
+    function onDown1 (eventData) {
+      image1.scale.x += 0.3
+      image1.scale.y += 0.3
+      renderer.render(stage)
+    }
+    stage.addChild(image1)
     renderer.render(stage)
   })
   // var sprites = []
