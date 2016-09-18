@@ -12,55 +12,53 @@ export function makePixiDriver (el, width, height) {
   console.log(renderer.view)
   renderer.backgroundColor = 0x0000FF // 0x061639
   var stage = new PIXI.Container()
-  // var bunny = null
-  // var views = {}
   stage.interactive = true
   el.appendChild(renderer.view)
-  PIXI.loader.add('shop', 'images/bunny.png').load(function () {
-    let image = new PIXI.Sprite(PIXI.Texture.from('images/bunny.png'))
-    image.interactive = true
-    // sprite.on('mousedown', onDown)
-    image.on('clickup', onDown)
-    image.on('mouseup', onDown)
-    image.on('touchstart', onDown)
-    image.on('touchend', onDown)
-    function onDown (eventData) {
-      image.scale.x += 0.3
-      image.scale.y += 0.3
-      renderer.render(stage)
-    }
-    stage.addChild(image)
-
-    let image1 = new PIXI.Sprite(PIXI.Texture.from('images/bunny.png'))
-    image1.x = 100
-    image1.y = 100
-    image1.interactive = true
-    // sprite.on('mousedown', onDown)
-    image1.on('clickup', onDown1)
-    image1.on('mouseup', onDown1)
-    image1.on('touchstart', onDown1)
-    image1.on('touchend', onDown1)
-    function onDown1 (eventData) {
-      image1.scale.x += 0.3
-      image1.scale.y += 0.3
-      renderer.render(stage)
-    }
-    stage.addChild(image1)
-    renderer.render(stage)
-  })
+  // (function () {
+  // let image = new PIXI.Sprite(PIXI.Texture.from('images/bunny.png'))
+  // image.interactive = true
+  // // sprite.on('mousedown', onDown)
+  // image.on('clickup', onDown)
+  // image.on('mouseup', onDown)
+  // image.on('touchstart', onDown)
+  // image.on('touchend', onDown)
+  // function onDown (eventData) {
+  //   image.scale.x += 0.3
+  //   image.scale.y += 0.3
+  //   renderer.render(stage)
+  // }
+  // stage.addChild(image)
+  //
+  // let image1 = new PIXI.Sprite(PIXI.Texture.from('images/bunny.png'))
+  // image1.x = 100
+  // image1.y = 100
+  // image1.interactive = true
+  // // sprite.on('mousedown', onDown)
+  // image1.on('clickup', onDown1)
+  // image1.on('mouseup', onDown1)
+  // image1.on('touchstart', onDown1)
+  // image1.on('touchend', onDown1)
+  // function onDown1 (eventData) {
+  //   image1.scale.x += 0.3
+  //   image1.scale.y += 0.3
+  //   renderer.render(stage)
+  // }
+  // stage.addChild(image1)
+  // renderer.render(stage)
+  // })
   // var sprites = []
   // PIXI.loader.add('shop', 'images/bg-shop.png').load(setup)
   // function setup () {
-  //   var image = new PIXI.Sprite(PIXI.Texture.fromImage('images/bg-shop.png'))
-  //   console.log(image)
-  //   images.push(image)
-  //   // stage.addChild(image)
-  //   // renderer.render(stage)
   // }
 
   let driver = function pixiDriver (sink$) {
     sink$.addListener({
       next: view => {
+        // console.log(image)
+        // view.image.interactive = true
+        // stage.addChild(view.image)
+        stage.addChild(view.image)
+        renderer.render(stage)
         // if (image !== 'undefined') {
           // stage.addChild(image2)
         // }

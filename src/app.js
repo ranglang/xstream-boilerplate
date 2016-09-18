@@ -13,6 +13,8 @@ import { makePixiDriver } from './driver/pixi-driver'
 // Local imports
 import main from 'page/main'
 
+import PIXI from 'pixi.js/bin/pixi.js'
+
 const history = supportsHistory()
   ? [createHistory(), {capture: true}]
   : [createHashHistory(), {capture: false}]
@@ -46,4 +48,6 @@ const drivers =
     router: makeRouterDriver(...history)
   }
 
-Cycle.run(main, drivers)
+PIXI.loader.add('shop', 'images/bunny.png').load(function () {
+  Cycle.run(main, drivers)
+})

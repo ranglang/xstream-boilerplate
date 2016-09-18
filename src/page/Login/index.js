@@ -4,6 +4,7 @@ import isolate from '@cycle/isolate'
 import tween from 'xstream/extra/tween'
 import {div, button} from '@cycle/dom'
 
+import { fromSprite } from '../../driver/fromSprite'
 function locationModal (data) {
   // const locationModalStyle = {
   //   left: `${Math.round(data.x)}px`,
@@ -65,8 +66,30 @@ function main (sources) {
 
   const openModal$ = sources.DOM.select('.login').events('click').mapTo()
   const closeModal$ = sources.DOM.select('.cancle').events('click').mapTo()
+  let bunney = new PIXI.Sprite(PIXI.Texture.fromImage('images/bunny.png'))
+  bunney.interactive = true
 
-  // ji
+  // bunney.on('clickup', function () {
+  //   console.log('hhhhhhhhhhh')
+  // })
+  // bunney.on('clickup', onDown)
+  bunney.on('mouseup', onDown)
+  // bunney.on('touchstart', onDown)
+  // bunney.on('touchend', onDown)
+  function onDown (eventData) {
+    console.log('...')
+    // image.scale.x += 0.3
+    // image.scale.y += 0.3
+    // renderer.render(stage)
+  }
+  const bSprite$ = fromSprite(bunney, 'mouseup').mapTo(1)
+
+  bSprite$.addListener({
+    next: i => console.log(i),
+    error: err => console.error(err),
+    complete: () => console.log('completed')
+  })
+
   let tweenY$ = tween({
     from: 0, to: 300, duration: 500, ease: tween.power3.easeOut
   })
@@ -149,7 +172,11 @@ function main (sources) {
         height: data[3]
       }))
     }
-  }).flatten().startWith(startState1)
+  }).flatten().startWith(
+      // (.map(() => {
+      startState1
+      // })
+  )
 
   const action$ = xs.combine(login$, action2$)
 
@@ -168,9 +195,6 @@ function main (sources) {
             button('.market', 'market')
           ]
         ),
-        // div('.backgounddiv',
-        //   [img({props: {src: 'images/null.png'}})]
-        // ),
         locationModal(data[1])
       ])
     )
@@ -188,7 +212,8 @@ function main (sources) {
           alpha: 1
         }
       ],
-      image: new PIXI.Sprite(PIXI.Texture.fromImage('images/bg-shop.png'))
+      image: bunney
+        // var image = new PIXI.Sprite(PIXI.Texture.fromImage('images/bg-shop.png'))
       //  new PIXI.Sprite(PIXI.loader.resources['images/bg-shop.png'].texture)
     }
     )
