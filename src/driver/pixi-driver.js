@@ -9,13 +9,30 @@ PIXI.DisplayObjectContainer.prototype.contains = function (child)
 
 export function makePixiDriver (el, width, height) {
   var renderer = PIXI.autoDetectRenderer(width, height)
+  console.log(renderer.view)
   renderer.backgroundColor = 0x0000FF // 0x061639
   var stage = new PIXI.Container()
   // var bunny = null
   // var views = {}
   stage.interactive = true
   el.appendChild(renderer.view)
-
+  PIXI.loader.add('shop', 'images/bunny.png').load(function () {
+    let image = new PIXI.Sprite(PIXI.Texture.from('images/bunny.png'))
+    image.interactive = true
+    // sprite.on('mousedown', onDown)
+    image.on('clickup', onDown)
+    image.on('mouseup', onDown)
+    image.on('touchstart', onDown)
+    image.on('touchend', onDown)
+    function onDown (eventData) {
+      console.log('...')
+      // image.scale.x += 0.3
+      // image.scale.y += 0.3
+      // renderer.render(stage)
+    }
+    stage.addChild(image)
+    renderer.render(stage)
+  })
   // var sprites = []
   // PIXI.loader.add('shop', 'images/bg-shop.png').load(setup)
   // function setup () {
@@ -36,11 +53,6 @@ export function makePixiDriver (el, width, height) {
         // renderer.render(stage)
 
         // renderer.render(stage)
-        PIXI.loader.add('shop', 'images/bunny.png').load(function () {
-          let image = new PIXI.Sprite(PIXI.Texture.from('images/bunny.png'))
-          stage.addChild(image)
-          renderer.render(stage)
-        })
         // console.log(view.image)
         // // view.image.map(image => {
         // stage.addChild(view.image)

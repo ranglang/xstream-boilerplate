@@ -2,34 +2,35 @@ import xs from 'xstream'
 import PIXI from 'pixi.js/bin/pixi.js'
 import isolate from '@cycle/isolate'
 import tween from 'xstream/extra/tween'
-import {div, button, img} from '@cycle/dom'
+import {div, button} from '@cycle/dom'
 
 function locationModal (data) {
-  const locationModalStyle = {
-    left: `${Math.round(data.x)}px`,
-    top: `${Math.round(data.y)}px`,
-    width: `${Math.round(data.width)}px`,
-    height: `${Math.round(data.height)}px`,
-    position: 'absolute',
-    alignItems: 'center',
-    display: 'flex',
-    flexDirection: 'column',
-    backgroundColor: 'blue',
-    paddingTop: '70px',
-    border: 'none'
-  }
-
-  if (data.value === 'house') {
-    return div({style: locationModalStyle},
-      [img({props: {src: 'images/bg-shop.png'}})]
-    )
-  } else if (data.value === 'market') {
-    return div({style: locationModalStyle},
-      [img({props: {src: 'images/bg-shop.png'}})]
-    )
-  } else {
-    return null
-  }
+  // const locationModalStyle = {
+  //   left: `${Math.round(data.x)}px`,
+  //   top: `${Math.round(data.y)}px`,
+  //   width: `${Math.round(data.width)}px`,
+  //   height: `${Math.round(data.height)}px`,
+  //   position: 'absolute',
+  //   alignItems: 'center',
+  //   display: 'flex',
+  //   flexDirection: 'column',
+  //   backgroundColor: 'blue',
+  //   paddingTop: '70px',
+  //   border: 'none'
+  // }
+  return null
+  // if (data.value === 'house') {
+  //   return div()
+  //   // return div({style: locationModalStyle},
+  //   //   [img({props: {src: 'images/bg-shop.png'}})]
+  //   // )
+  // } else if (data.value === 'market') {
+  //   return div({style: locationModalStyle},
+  //     [img({props: {src: 'images/bg-shop.png'}})]
+  //   )
+  // } else {
+  //   return null
+  // }
 }
 
 function loginModal (value) {
@@ -167,9 +168,9 @@ function main (sources) {
             button('.market', 'market')
           ]
         ),
-        div('.backgounddiv',
-          [img({props: {src: 'images/null.png'}})]
-        ),
+        // div('.backgounddiv',
+        //   [img({props: {src: 'images/null.png'}})]
+        // ),
         locationModal(data[1])
       ])
     )
